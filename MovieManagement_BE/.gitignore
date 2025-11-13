@@ -1,0 +1,17 @@
+bin/
+obj/
+*.user
+*.suo
+.vs/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+*.log
+
+# Environment variables
+.env
+
+# Uploaded files
+**/uploads/

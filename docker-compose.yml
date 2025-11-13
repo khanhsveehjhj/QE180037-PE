@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./MovieManagement_BE
+      dockerfile: Dockerfile
+    container_name: moviemanagement-backend
+    env_file:
+      - ./MovieManagement_BE/.env
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80
+      - BASE_URL=http://backend
+    ports:
+      - "5000:80"
+    networks:
+      - moviemanagement-network
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./MovieManagement_FE/movie-management
+      dockerfile: Dockerfile
+    container_name: moviemanagement-frontend
+    environment:
+      - NEXT_PUBLIC_API_URL=http://backend/api
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    networks:
+      - moviemanagement-network
+    restart: unless-stopped
+
+
+networks:
+  moviemanagement-network:
+    driver: bridge
